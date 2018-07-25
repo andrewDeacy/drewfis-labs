@@ -16,7 +16,12 @@
   margin-right: auto;
 }
 
-.app-header {
+.app-header-logo{
+  float: left !important;
+  margin-top: -15px !important;
+}
+
+.drewfis-container {
   padding: 20px;
   align-items: center;
 }
