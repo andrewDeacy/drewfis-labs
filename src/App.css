@@ -5,8 +5,10 @@
 .container {
   display: flex;
   width: 100%;
-  flex-wrap: wrap
-
+  flex-wrap: wrap;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .app-logo {
@@ -36,4 +38,48 @@
 
 .hide-bong {
   display: none;
+}
+
+.previous {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: white;
+  z-index: 20;
+}
+
+.prevCircle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 85%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  opacity: 0.5;
+  background-color: black;
+  z-index: 19;
+}
+
+.next {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: white;
+  z-index: 20;
+}
+
+.nextCircle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 85%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  opacity: 0.5;
+  background-color: black;
+  z-index: 19;
 }
