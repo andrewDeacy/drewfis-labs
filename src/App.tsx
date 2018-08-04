@@ -4,14 +4,23 @@ import { RotatingBong } from './Components/RotatingBong';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-
-
-import image1 from './images/01.jpg';
-import image2 from './images/02.jpg';
-import image3 from './images/03.jpg';
-import image4 from './images/04.jpg';
 import headerLogo from './header-logo.png';
-
+import camera0 from './images/00.jpg';
+import camera1 from './images/01.jpg';
+import camera2 from './images/02.jpg';
+import camera3 from './images/03.jpg';
+import camera4 from './images/04.jpg';
+import camera5 from './images/05.jpg';
+import camera6 from './images/06.jpg';
+import camera7 from './images/07.jpg';
+import camera8 from './images/08.jpg';
+import camera9 from './images/09.jpg';
+import camera10 from './images/10.jpg';
+import camera11 from './images/11.jpg';
+import camera12 from './images/12.jpg';
+import camera13 from './images/13.jpg';
+import camera14 from './images/14.jpg';
+import camera15 from './images/15.jpg';
 
 //declare var circlr: any;
 interface AppProps {
@@ -44,10 +53,22 @@ class App extends React.Component<AppProps, AppState> {
 
     private imagePaths: any[] =
     [
-        image1,
-        image2,
-        image3,
-        image4
+        camera0,
+        camera1,
+        camera2,
+        camera3,
+        camera4,
+        camera5,
+        camera6,
+        camera7,
+        camera8,
+        camera9,
+        camera10,
+        camera11,
+        camera12,
+        camera13,
+        camera14,
+        camera15
     ];
 
     componentDidMount() {
@@ -60,27 +81,6 @@ class App extends React.Component<AppProps, AppState> {
     toggleActive = (newActiveID: number) => {
         this.setState({
             activeID: newActiveID
-        });
-    };
-
-    isActive = () => {
-        // this can be done inline w react elements
-
-
-    };
-
-    handleNextClick = () => {
-        let test = this.state.activeID + 1;
-        this.setState({
-            activeID: test
-        });
-    };
-
-
-    handlePrevClick = () => {
-        let test = this.state.activeID - 1;
-        this.setState({
-            activeID: test
         });
     };
 
