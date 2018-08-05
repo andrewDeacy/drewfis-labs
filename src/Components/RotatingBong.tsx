@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {circlr} from 'circlr';
+import {Button} from 'react-bootstrap';
+
 import ScrollTrigger from 'react-scroll-trigger';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {setInterval} from "timers";
 
 interface RotatingBongProps {
     bongImagePathIDLookUp: [number, string][];
@@ -48,6 +51,29 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
         this.handleNextClick();
     }
 
+    handleWheel = (e) => {
+        if(setInterval(this.isWheelMovingRight(e), 300)){
+            this.handleNextClick();
+        } else {
+            this.handlePrevClick();
+        }
+    }
+
+    isWheelMovingRight = (e) => {
+        let isRight = e.deltaX;
+
+        isRight ? console.log("wheel right!!") : console.log("wheel left!!");
+
+        return isRight;
+    }
+
+
+
+    handleTouchStart = (e) => {
+
+    }
+
+
     componentWillMount(){
         if(this.scrollDiv)
             this.scrollDiv.removeEventListener('scroll', this.handleScroll);
@@ -79,16 +105,22 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     renderBong = (bong: [number, any]) => {
         return (
-            <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
-                <img src={bong[1]} />
+            <div onWheel={this.handleWheel} onTouchStart={this.handleTouchStart}>
+            <ScrollTrigger >
+                <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
+                    <div>
+                    <img src={bong[1]} />
 
-                    <i aria-hidden="true" onClick={this.handleNextClick} className={"nextCircle"}>
-                        <FontAwesomeIcon icon="arrow-right" className={"next"}/>
-                    </i>
+                        <i aria-hidden="true" onClick={this.handleNextClick} className={"nextCircle"}>
+                            <FontAwesomeIcon icon="arrow-right" className={"next"}/>
+                        </i>
 
-                    <i aria-hidden="true" onClick={this.handlePrevClick} className={"prevCircle"}>
-                        <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
-                    </i>
+                        <i aria-hidden="true" onClick={this.handlePrevClick} className={"prevCircle"}>
+                            <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
+                        </i>
+                    </div>
+                </div>
+                </ScrollTrigger>
             </div>
         );
     };
@@ -96,9 +128,8 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
     public render() {
         return (
             <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 scroll-drew" ref={ref => this.scrollDiv = ref}>
-                <ScrollTrigger onEnter={this.handleScroll}>
                                     {this.state.bongImages && this.state.bongImages.map(bong => this.renderBong(bong))}
-                </ScrollTrigger>
+                <Button bsStyle="success" className={"btn-block"}>Purchase</Button>
             </div>
         );
     }
