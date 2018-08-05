@@ -17,7 +17,6 @@
     "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": false,
     "noUnusedLocals": false
-
   },
   "rules": {
     "named-imports-order": "any"

@@ -1,4 +1,4 @@
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import {Navbar, Nav, NavItem, Button} from 'react-bootstrap';
 import * as React from 'react';
 import { RotatingBong } from './Components/RotatingBong';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -24,6 +24,7 @@ import camera15 from './images/15.jpg';
 
 //declare var circlr: any;
 interface AppProps {
+    //onWindowScroll: () => void;
 
 }
 interface AppState {
@@ -72,12 +73,37 @@ class App extends React.Component<AppProps, AppState> {
     ];
 
     componentDidMount() {
+/*
+        if(this.props.onWindowScroll){
+*/
+            window.addEventListener("scroll", this.handleScroll);
+        //}
+
+
+
+        //window.addEventListener('scroll', this.handleScroll, { passive: true })
+
         this.setState({
             lookUp: this.generateImageLookUp(this.imagePaths)
         });
     }
 
+    componentWillUnmount() {
+        //if (this.props.onWindowScroll)
+            window.removeEventListener("scroll", this.handleScroll);
+    }
 
+    handleScroll = (e) => {
+        console.log('scroll event');
+        console.log(e);
+
+        // Do something generic, if you have to
+        console.log("ScrollWrapper's handleScroll");
+
+        // Call the passed-in prop
+        //if (this.props.onWindowScroll) this.props.onWindowScroll(event);
+        //this.handleNextClick();
+    }
     toggleActive = (newActiveID: number) => {
         this.setState({
             activeID: newActiveID
@@ -98,17 +124,25 @@ class App extends React.Component<AppProps, AppState> {
                 <Navbar.Header>
                     <Navbar.Brand>
                         <a href="#home">
-                            <img src={headerLogo} className="app-header-logo" alt="logo" height={25}/>
+                            <img src={headerLogo} className="app-header-logo" alt="logo" height={29}/>
                         </a>
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <NavItem eventKey={1} href="#">
-                        Preconfigured
+                    <NavItem eventKey={1} href="#" className={"menu-item"}>
+                        Products
                     </NavItem>
-                    <NavItem eventKey={2} href="#">
-                        Build your own
+                    <NavItem eventKey={1} href="#" className={"menu-item"}>
+                        About
                     </NavItem>
+                    <NavItem eventKey={1} href="#" className={"menu-item"}>
+                        Contact
+                    </NavItem>
+                    <div className={"build-button"}>
+                    <NavItem eventKey={2} href="#" >
+                        <Button bsStyle="warning" color={"black"}> <b style={{"color":"black"}}>Build your own</b></Button>
+                    </NavItem>
+                    </div>
                 </Nav>
             </Navbar>
 
@@ -119,5 +153,8 @@ class App extends React.Component<AppProps, AppState> {
     );
   }
 }
+
+//declare var circlr: any;
+
 
 export default App;

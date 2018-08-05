@@ -1,4 +1,7 @@
 import * as React from 'react';
+import {circlr} from 'circlr';
+import ScrollTrigger from 'react-scroll-trigger';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface RotatingBongProps {
@@ -13,16 +16,20 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     constructor(props) {
         super(props);
+        //this.handleScroll = this.handleScroll.bind(this);
         this.state = {
             activeBongID: 1,
             bongImages: this.props.bongImagePathIDLookUp
         };
     }
 
-    private nextButton: HTMLButtonElement;
-    private previousButton: HTMLButtonElement;
+    private scrollDiv: HTMLElement;
 
     componentDidMount() {
+        //window.addEventListener('scroll', this.handleScroll);
+        if (this.scrollDiv)
+            this.scrollDiv.addEventListener('scroll', ()=> this.handleScroll);
+
         this.setState({
             bongImages: this.props.bongImagePathIDLookUp,
             activeBongID: 0
@@ -31,12 +38,19 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     componentWillReceiveProps(nextProps){
         this.setState({
-            bongImages: nextProps.bongImages
+            bongImages: nextProps.bongImagePathIDLookUp
         });
     }
 
-    componentWillMount(){
+    handleScroll = (e) => {
+        console.log('scroll event');
+        console.log(e);
+        this.handleNextClick();
+    }
 
+    componentWillMount(){
+        if(this.scrollDiv)
+            this.scrollDiv.removeEventListener('scroll', this.handleScroll);
     }
 
     toggleActive = (newActiveID: number) => {
@@ -65,7 +79,7 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     renderBong = (bong: [number, any]) => {
         return (
-            <div className={this.state.activeBongID == bong[0] ? "" : "hide-bong"}>
+            <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
                 <img src={bong[1]} />
 
                     <i aria-hidden="true" onClick={this.handleNextClick} className={"nextCircle"}>
@@ -81,18 +95,49 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     public render() {
         return (
-            <div className="container text-center">
-                <div className="row">
-                    <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                        <div className="drewfis-labs image-container" style={{ width: "100%" }}/>
-                        <div>
-                            {this.props.bongImagePathIDLookUp && this.props.bongImagePathIDLookUp.map(bong => this.renderBong(bong))}
-                        </div>
-                    </div>
-                </div>
+            <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 scroll-drew" ref={ref => this.scrollDiv = ref}>
+                <ScrollTrigger onEnter={this.handleScroll}>
+                                    {this.state.bongImages && this.state.bongImages.map(bong => this.renderBong(bong))}
+                </ScrollTrigger>
             </div>
         );
     }
 }
 
 export default RotatingBong;
+
+
+/*interface ScrollWrapperProps {
+    onWindowScroll: (e) => void;
+}
+interface ScrollWrapperState {
+
+}
+
+export class ScrollWrapper extends React.Component<ScrollWrapperProps, ScrollWrapperState>{
+    constructor(props) {
+        super(props);
+        //this.handleScroll = this.handleScroll.bind(this);
+        this.state = {
+
+        };
+    }
+
+    handleScroll = (e) => {
+        // Do something generic, if you have to
+        console.log("ScrollWrapper's handleScroll");
+        // Call the passed-in prop
+        if (this.props.onWindowScroll) this.props.onWindowScroll(event);
+    };
+
+
+
+    componentDidMount() {
+        if (this.props.onWindowScroll) window.addEventListener("scroll", this.handleScroll);
+    };
+
+    componentWillUnmount() {
+        if (this.props.onWindowScroll) window.removeEventListener("scroll", this.handleScroll);
+    };
+};*/
+

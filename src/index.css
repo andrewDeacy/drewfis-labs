@@ -53,3 +53,52 @@ body {
   z-index: 19;
   cursor: pointer;
 }
+
+.drewfis-container {
+  overflow-x: scroll;
+  overflow-y: scroll;
+  white-space: nowrap;
+}
+
+.frame::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.frame::-webkit-scrollbar:horizontal {
+  height: 11px;
+}
+
+.frame::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0, .5);
+}
+.frame::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.drewfis-card {
+  display: inline-block;
+}
+
+.scroll-drew {
+  overflow-x:scroll;
+  overflow-y: scroll;
+}
+
+.menu-item{
+  padding-top: 5px;
+}
+
+.build-button{
+  float: right !important;
+  margin-right: 2px !important;
+  padding-right: 2px !important;
+  margin-left: 10px;
+  color: black !important;
+  margin-bottom: 15px;
+  padding-left: 325px;
+  padding-top: 13px;
+  padding-bottom: 2px;
+}

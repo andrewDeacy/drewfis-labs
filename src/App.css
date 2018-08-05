@@ -8,7 +8,7 @@
   flex-wrap: wrap;
   position: relative;
   margin: 0 auto;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .app-logo {
@@ -24,8 +24,9 @@
 }
 
 .drewfis-container {
-  padding: 20px;
-  align-items: center;
+/*  //padding: 20px;
+  //align-items: center;*/
+  overflow-y: auto !important;
 }
 
 .app-title {
