@@ -17,10 +17,12 @@ import camera8 from './images/08.jpg';
 import camera9 from './images/09.jpg';
 import camera10 from './images/10.jpg';
 import camera11 from './images/11.jpg';
+/*
 import camera12 from './images/12.jpg';
 import camera13 from './images/13.jpg';
 import camera14 from './images/14.jpg';
 import camera15 from './images/15.jpg';
+*/
 
 //declare var circlr: any;
 interface AppProps {
@@ -66,10 +68,10 @@ class App extends React.Component<AppProps, AppState> {
         camera9,
         camera10,
         camera11,
-        camera12,
+/*        camera12,
         camera13,
         camera14,
-        camera15
+        camera15*/
     ];
 
     componentDidMount() {

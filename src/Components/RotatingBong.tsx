@@ -52,7 +52,7 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
     }
 
     handleWheel = (e) => {
-        if(setInterval(this.isWheelMovingRight(e), 300)){
+        if(setTimeout(this.isWheelMovingRight(e), 500)){
             this.handleNextClick();
         } else {
             this.handlePrevClick();
@@ -109,7 +109,9 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
             <ScrollTrigger >
                 <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
                     <div>
-                    <img src={bong[1]} />
+                    <div className={"bong-image-holder"}>
+                        <img src={bong[1]} className={"bong-image"}/>
+                    </div>
 
                         <i aria-hidden="true" onClick={this.handleNextClick} className={"nextCircle"}>
                             <FontAwesomeIcon icon="arrow-right" className={"next"}/>
@@ -129,7 +131,8 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
         return (
             <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 scroll-drew" ref={ref => this.scrollDiv = ref}>
                                     {this.state.bongImages && this.state.bongImages.map(bong => this.renderBong(bong))}
-                <Button bsStyle="success" className={"btn-block"}>Purchase</Button>
+                <Button bsStyle="primary" className={"btn-block"} style={{marginTop: "10px", marginBottom: "10px"}}>Upgrade Bowl</Button>
+                <Button bsStyle="success" className={"btn-block"} style={{marginTop: "10px", marginBottom: "10px"}}>Purchase</Button>
             </div>
         );
     }
