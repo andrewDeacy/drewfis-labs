@@ -1,18 +1,16 @@
 import * as React from 'react';
 import {circlr} from 'circlr';
 import {Button} from 'react-bootstrap';
-
 import ScrollTrigger from 'react-scroll-trigger';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {setInterval} from "timers";
 
 interface RotatingBongProps {
     bongImagePathIDLookUp: [number, string][];
 }
 interface RotatingBongState {
-    activeBongID: number,
+    activeBongID: number;
     bongImages: [number, string][];
+    touchStart: number;
 }
 
 export class RotatingBong extends React.Component<RotatingBongProps, RotatingBongState> {
@@ -22,11 +20,16 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
         this.state = {
             activeBongID: 1,
-            bongImages: this.props.bongImagePathIDLookUp
+            bongImages: this.props.bongImagePathIDLookUp,
+            touchStart: 0
         };
     }
 
     private scrollDiv: HTMLElement;
+    private y: number = 0; //current y pos
+    private sy: number = this.y; //previous y pos
+
+    private touchStart: number;
 
     debounce = (func, wait) => {
         console.log(func);
@@ -39,12 +42,20 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
     }
 
     componentDidMount() {
-        if (this.scrollDiv)
-            this.scrollDiv.addEventListener('wheel', this.debounce((e) => { this.handleWheel(e) }, 15));
+        if (this.scrollDiv) {
+            this.scrollDiv.addEventListener('wheel', this.debounce((e) => {
+                this.handleWheel(e)
+            }, 15));
 
+            //this.scrollDiv.addEventListener('touchmove', this.debounce((e) => { this.handleTouchStart(e) }, 15));
+            this.scrollDiv.addEventListener('touchstart', this.debounce((e) => { this.handleTouchStart(e) }, 15));
+            this.scrollDiv.addEventListener('touchend', this.debounce((e) => { this.handleTouchEnd(e) }, 15));
+
+        }
         this.setState({
             bongImages: this.props.bongImagePathIDLookUp,
-            activeBongID: 0
+            activeBongID: 0,
+            touchStart: 0
         });
     }
 
@@ -77,15 +88,48 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
         this.debounce((e) => { this.handleWheel(e) }, 15);
     }
 
-
-    handleTouchStart = (e) => {
-
+    debounceTouchStart = () => {
+        this.debounce((e) => { this.handleTouchStart(e) }, 15);
     }
 
 
+    debounceTouchEnd = () => {
+        this.debounce((e) => { this.handleTouchEnd(e) }, 15);
+    }
+
+    handleTouchStart = (e) => {
+        console.log(e);
+
+        if(e.touches[0] != undefined) {
+            this.setState({
+                touchStart: e.touches[0] == undefined ? 0 : e.touches[0].clientY
+            });
+        }
+    }
+
+    handleTouchEnd = (e) => {
+        console.log(e);
+        if(e.changedTouches[0] != undefined) {
+            var touchEnd = e.changedTouches[0].clientY;
+
+            if (this.state.touchStart > (touchEnd + 5)) {
+                this.handleNextClick();
+            } else {
+                this.handlePrevClick();
+            }
+        }
+    }
+
     componentWillUnmount(){
-        if(this.scrollDiv)
-            this.scrollDiv.removeEventListener('wheel', this.debounce((e) => { this.handleWheel(e) }, 15));
+        if(this.scrollDiv) {
+            this.scrollDiv.removeEventListener('wheel', this.debounce((e) => {
+                this.handleWheel(e)
+            }, 15));
+
+            this.scrollDiv.removeEventListener('touchstart', this.debounce((e) => { this.handleTouchStart(e) }, 15));
+            this.scrollDiv.removeEventListener('touchend', this.debounce((e) => { this.handleTouchEnd(e) }, 15));
+
+        }
     }
 
     toggleActive = (newActiveID: number) => {
@@ -114,7 +158,7 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     renderBong = (bong: [number, any]) => {
         return (
-            <div onWheel={this.debounceWheel} >
+            <div onWheel={this.debounceWheel} onTouchStart={this.debounceTouchStart} onTouchEnd={this.debounceTouchEnd}>
             <ScrollTrigger >
                 <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
                     <div>
