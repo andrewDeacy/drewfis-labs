@@ -78,7 +78,9 @@ class App extends React.Component<AppProps, AppState> {
 /*
         if(this.props.onWindowScroll){
 */
-            window.addEventListener("scroll", this.handleScroll);
+        //let delayScroll = this.debounce(() => this.handleScroll, 250, false);
+
+        //window.addEventListener("scroll", delayScroll);
         //}
 
 
@@ -92,20 +94,25 @@ class App extends React.Component<AppProps, AppState> {
 
     componentWillUnmount() {
         //if (this.props.onWindowScroll)
-            window.removeEventListener("scroll", this.handleScroll);
+        //let delayScroll = this.debounce(() => this.handleScroll, 250, false);
+
+        //window.removeEventListener("scroll", delayScroll);
     }
 
     handleScroll = (e) => {
-        console.log('scroll event');
-        console.log(e);
+        //console.log(e);
 
         // Do something generic, if you have to
-        console.log("ScrollWrapper's handleScroll");
+        //console.log("ScrollWrapper's handleScroll");
 
         // Call the passed-in prop
         //if (this.props.onWindowScroll) this.props.onWindowScroll(event);
         //this.handleNextClick();
     }
+
+
+
+
     toggleActive = (newActiveID: number) => {
         this.setState({
             activeID: newActiveID

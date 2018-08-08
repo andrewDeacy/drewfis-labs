@@ -19,7 +19,7 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     constructor(props) {
         super(props);
-        //this.handleScroll = this.handleScroll.bind(this);
+
         this.state = {
             activeBongID: 1,
             bongImages: this.props.bongImagePathIDLookUp
@@ -28,10 +28,19 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     private scrollDiv: HTMLElement;
 
+    debounce = (func, wait) => {
+        console.log(func);
+        let timeout;
+        return function(...args) {
+            const context = this;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        }
+    }
+
     componentDidMount() {
-        //window.addEventListener('scroll', this.handleScroll);
         if (this.scrollDiv)
-            this.scrollDiv.addEventListener('scroll', ()=> this.handleScroll);
+            this.scrollDiv.addEventListener('wheel', this.debounce((e) => { this.handleWheel(e) }, 15));
 
         this.setState({
             bongImages: this.props.bongImagePathIDLookUp,
@@ -45,28 +54,28 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
         });
     }
 
-    handleScroll = (e) => {
-        console.log('scroll event');
-        console.log(e);
-        this.handleNextClick();
-    }
-
     handleWheel = (e) => {
-        if(setTimeout(this.isWheelMovingRight(e), 500)){
+        if (e.deltaY < 0) {
+            console.log('scrolling up');
             this.handleNextClick();
-        } else {
+        }
+        if (e.deltaY > 0) {
+            console.log('scrolling down');
+            this.handlePrevClick();
+        }
+        if(e.deltaX > 0){
+            console.log('scrolling right')
+            this.handleNextClick();
+        }
+        if(e.deltaX < 0){
+            console.log('scrolling left')
             this.handlePrevClick();
         }
     }
 
-    isWheelMovingRight = (e) => {
-        let isRight = e.deltaX;
-
-        isRight ? console.log("wheel right!!") : console.log("wheel left!!");
-
-        return isRight;
+    debounceWheel = () => {
+        this.debounce((e) => { this.handleWheel(e) }, 15);
     }
-
 
 
     handleTouchStart = (e) => {
@@ -74,9 +83,9 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
     }
 
 
-    componentWillMount(){
+    componentWillUnmount(){
         if(this.scrollDiv)
-            this.scrollDiv.removeEventListener('scroll', this.handleScroll);
+            this.scrollDiv.removeEventListener('wheel', this.debounce((e) => { this.handleWheel(e) }, 15));
     }
 
     toggleActive = (newActiveID: number) => {
@@ -105,7 +114,7 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 
     renderBong = (bong: [number, any]) => {
         return (
-            <div onWheel={this.handleWheel} onTouchStart={this.handleTouchStart}>
+            <div onWheel={this.debounceWheel} >
             <ScrollTrigger >
                 <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
                     <div>
@@ -139,39 +148,3 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
 }
 
 export default RotatingBong;
-
-
-/*interface ScrollWrapperProps {
-    onWindowScroll: (e) => void;
-}
-interface ScrollWrapperState {
-
-}
-
-export class ScrollWrapper extends React.Component<ScrollWrapperProps, ScrollWrapperState>{
-    constructor(props) {
-        super(props);
-        //this.handleScroll = this.handleScroll.bind(this);
-        this.state = {
-
-        };
-    }
-
-    handleScroll = (e) => {
-        // Do something generic, if you have to
-        console.log("ScrollWrapper's handleScroll");
-        // Call the passed-in prop
-        if (this.props.onWindowScroll) this.props.onWindowScroll(event);
-    };
-
-
-
-    componentDidMount() {
-        if (this.props.onWindowScroll) window.addEventListener("scroll", this.handleScroll);
-    };
-
-    componentWillUnmount() {
-        if (this.props.onWindowScroll) window.removeEventListener("scroll", this.handleScroll);
-    };
-};*/
-
