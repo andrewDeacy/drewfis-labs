@@ -92,7 +92,6 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
         this.debounce((e) => { this.handleTouchStart(e) }, 15);
     }
 
-
     debounceTouchEnd = () => {
         this.debounce((e) => { this.handleTouchEnd(e) }, 15);
     }
@@ -156,26 +155,60 @@ export class RotatingBong extends React.Component<RotatingBongProps, RotatingBon
         });
     };
 
+    // TODO: Refactor and make each piece a seperate componenet...
     renderBong = (bong: [number, any]) => {
         return (
             <div onWheel={this.debounceWheel} onTouchStart={this.debounceTouchStart} onTouchEnd={this.debounceTouchEnd}>
-            <ScrollTrigger >
-                <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
-                    <div>
-                    <div className={"bong-image-holder"}>
-                        <img src={bong[1]} className={"bong-image"}/>
-                    </div>
+                {/*<---------Top bong piece-------->*/}
+                <ScrollTrigger >
+                    <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
+                        <div className={"bong-image-holder"}>
+                            <img src={bong[1]} className={"bong-image"}/>
+                        </div>
 
-                        <i aria-hidden="true" onClick={this.handleNextClick} className={"nextCircle"}>
-                            <FontAwesomeIcon icon="arrow-right" className={"next"}/>
-                        </i>
+                            <i aria-hidden="true" onClick={this.handleNextClick} className={"nextCircle"}>
+                                <FontAwesomeIcon icon="arrow-right" className={"next"}/>
+                            </i>
 
-                        <i aria-hidden="true" onClick={this.handlePrevClick} className={"prevCircle"}>
-                            <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
-                        </i>
+                            <i aria-hidden="true" onClick={this.handlePrevClick} className={"prevCircle"}>
+                                <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
+                            </i>
                     </div>
-                </div>
-                </ScrollTrigger>
+                    </ScrollTrigger>
+
+                {/*<---------Middle bong piece-------->*/}
+                <ScrollTrigger >
+                        <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
+                            <div className={"bong-image-holder"}>
+                                <img src={bong[1]} className={"bong-image"}/>
+                            </div>
+
+                            <i aria-hidden="true" onClick={this.handleNextClick} className={"nextCircle"}>
+                                <FontAwesomeIcon icon="arrow-right" className={"next"}/>
+                            </i>
+
+                            <i aria-hidden="true" onClick={this.handlePrevClick} className={"prevCircle"}>
+                                <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
+                            </i>
+                        </div>
+                    </ScrollTrigger>
+
+                {/*<---------Bottom bong piece-------->*/}
+                <ScrollTrigger >
+                        <div className={this.state.activeBongID == bong[0] ? "drewfis-container" : "hide-bong drewfis-container"}>
+                            <div className={"bong-image-holder"}>
+                                <img src={bong[1]} className={"bong-image"}/>
+                            </div>
+
+                            <i aria-hidden="true" onClick={this.handleNextClick} className={"nextCircle"}>
+                                <FontAwesomeIcon icon="arrow-right" className={"next"}/>
+                            </i>
+
+                            <i aria-hidden="true" onClick={this.handlePrevClick} className={"prevCircle"}>
+                                <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
+                            </i>
+                        </div>
+                    </ScrollTrigger>
             </div>
         );
     };

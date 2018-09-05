@@ -5,24 +5,27 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import headerLogo from './header-logo.png';
-import camera0 from './images/00.jpg';
-import camera1 from './images/01.jpg';
-import camera2 from './images/02.jpg';
-import camera3 from './images/03.jpg';
-import camera4 from './images/04.jpg';
-import camera5 from './images/05.jpg';
-import camera6 from './images/06.jpg';
-import camera7 from './images/07.jpg';
-import camera8 from './images/08.jpg';
-import camera9 from './images/09.jpg';
-import camera10 from './images/10.jpg';
-import camera11 from './images/11.jpg';
-/*
-import camera12 from './images/12.jpg';
-import camera13 from './images/13.jpg';
-import camera14 from './images/14.jpg';
-import camera15 from './images/15.jpg';
-*/
+
+/* <-------bottom bong images-------> */
+import bong00_00 from './images/final-test-images/00_00_00_00.jpg';
+import bong00_01 from './images/final-test-images/00_01_00_00.jpg';
+import bong00_02 from './images/final-test-images/00_02_00_00.jpg';
+import bong00_03 from './images/final-test-images/00_03_00_00.jpg';
+import bong00_04 from './images/final-test-images/00_04_00_00.jpg';
+
+/* <-------middle bong images-------> */
+import bong01_00 from './images/final-test-images/01_00_00_00.jpg';
+import bong01_01 from './images/final-test-images/01_01_00_00.jpg';
+import bong01_02 from './images/final-test-images/01_02_00_00.jpg';
+import bong01_03 from './images/final-test-images/01_03_00_00.jpg';
+import bong01_04 from './images/final-test-images/01_04_00_00.jpg';
+
+/* <-------top bong images-------> */
+import bong02_00 from './images/final-test-images/02_00_00_00.jpg';
+import bong02_01 from './images/final-test-images/02_01_00_00.jpg';
+import bong02_02 from './images/final-test-images/02_02_00_00.jpg';
+import bong02_03 from './images/final-test-images/02_03_00_00.jpg';
+import bong02_04 from './images/final-test-images/02_04_00_00.jpg';
 
 //declare var circlr: any;
 interface AppProps {
@@ -67,11 +70,7 @@ class App extends React.Component<AppProps, AppState> {
         camera8,
         camera9,
         camera10,
-        camera11,
-/*        camera12,
-        camera13,
-        camera14,
-        camera15*/
+        camera11
     ];
 
     componentDidMount() {
@@ -149,7 +148,7 @@ class App extends React.Component<AppProps, AppState> {
                     </NavItem>
                     <div className={"build-button"}>
                     <NavItem eventKey={2} href="#" >
-                        <Button bsStyle="warning" color={"black"}> <b style={{"color":"black"}}>Build your own</b></Button>
+                        <Button bsStyle="warning" color={"black"}> <b style={{"color":"black"}}>Build your own bong</b></Button>
                     </NavItem>
                     </div>
                 </Nav>
@@ -162,8 +161,5 @@ class App extends React.Component<AppProps, AppState> {
     );
   }
 }
-
-//declare var circlr: any;
-
 
 export default App;
