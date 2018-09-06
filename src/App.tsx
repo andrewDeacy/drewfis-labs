@@ -34,7 +34,10 @@ interface AppProps {
 }
 interface AppState {
     activeID: number,
-    lookUp: [number, any][]
+    topLookUp: [number, any][],
+    middleLookUp: [number, any][],
+    bottomLookUp: [number, any][]
+
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -48,7 +51,9 @@ class App extends React.Component<AppProps, AppState> {
 
         this.state = {
             activeID: 1,
-            lookUp: this.generateImageLookUp(this.imagePaths)
+            bottomLookUp: this.generateImageLookUp(this.bottomImagePaths),
+            middleLookUp: this.generateImageLookUp(this.middleImagePaths),
+            topLookUp: this.generateImageLookUp(this.topImagePaths)
         };
     }
 
@@ -57,21 +62,32 @@ class App extends React.Component<AppProps, AppState> {
     private previousButton: HTMLButtonElement;
     private playButton: HTMLButtonElement;
 
-    private imagePaths: any[] =
+    private bottomImagePaths: any[] =
     [
-        camera0,
-        camera1,
-        camera2,
-        camera3,
-        camera4,
-        camera5,
-        camera6,
-        camera7,
-        camera8,
-        camera9,
-        camera10,
-        camera11
+        bong00_00,
+        bong00_01,
+        bong00_02,
+        bong00_03,
+        bong00_04
     ];
+
+    private middleImagePaths: any[] =
+        [
+            bong01_00,
+            bong01_01,
+            bong01_02,
+            bong01_03,
+            bong01_04
+        ];
+
+    private topImagePaths: any[] =
+        [
+            bong02_00,
+            bong02_01,
+            bong02_02,
+            bong02_03,
+            bong02_04
+        ];
 
     componentDidMount() {
 /*
@@ -87,7 +103,9 @@ class App extends React.Component<AppProps, AppState> {
         //window.addEventListener('scroll', this.handleScroll, { passive: true })
 
         this.setState({
-            lookUp: this.generateImageLookUp(this.imagePaths)
+            bottomLookUp: this.generateImageLookUp(this.bottomImagePaths),
+            middleLookUp: this.generateImageLookUp(this.middleImagePaths),
+            topLookUp: this.generateImageLookUp(this.topImagePaths)
         });
     }
 
@@ -154,8 +172,11 @@ class App extends React.Component<AppProps, AppState> {
                 </Nav>
             </Navbar>
 
-
-            <RotatingBong bongImagePathIDLookUp={this.state.lookUp}/>
+            <RotatingBong
+                bottomBongLookUp={this.state.bottomLookUp}
+                middleBongLookUp={this.state.middleLookUp}
+                topBongLookUp={this.state.topLookUp}
+            />
         </div>
 
     );
