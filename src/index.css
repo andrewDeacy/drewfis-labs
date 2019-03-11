@@ -10,16 +10,34 @@ body {
 
 .previous {
   position: absolute;
-  top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
   color: white;
   z-index: 20;
 }
 
+
+
+/* Grow */
+.hvr-grow {
+  display: inline-block;
+  vertical-align: middle;
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  transition-duration: 0.3s;
+  transition-property: transform;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+  transform: scale(1.1);
+}
+
 .prevCircle {
   position: absolute;
-  top: 50%;
   transform: translateY(-50%);
   right: 85%;
   width: 50px;
@@ -28,12 +46,14 @@ body {
   opacity: 0.5;
   background-color: black;
   z-index: 19;
-  cursor: pointer;
+}
+
+.costText{
+  font-size: x-large;
 }
 
 .next {
   position: absolute;
-  top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
   color: white;
@@ -42,7 +62,6 @@ body {
 
 .nextCircle {
   position: absolute;
-  top: 50%;
   transform: translateY(-50%);
   left: 85%;
   width: 50px;
@@ -51,14 +70,12 @@ body {
   opacity: 0.5;
   background-color: black;
   z-index: 19;
-  cursor: pointer;
 }
 
 .drewfis-container {
   overflow-x: scroll;
   overflow-y: scroll;
   white-space: nowrap;
-  cursor: move;
 }
 
 .frame::-webkit-scrollbar {
@@ -109,11 +126,50 @@ body {
   height: 70%;
   width: 70%;
   display:inline;
+  left: 50%;
+  position: relative;
+  transform: translate(50%);
 }
 
 .bong-image-holder{
   display: block;
   width: 35%;
+}
+
+.fa-arrow-right{
+  top: 50%;
+}
+
+.fa-arrow-left{
+  top: 50%;
+}
+
+.top15{
+  top: 15%;
+}
+
+.top30{
+  top: 44%;
+}
+
+.top45{
+  top: 69%;
+}
+
+.top50{
+  top: 50%;
+}
+
+.has4th{
+  top: 34%;
+}
+
+.top39{
+  top: 39%;
+}
+
+.top615{
+  top: 61.5%;
 }
 
 @media screen and (max-width: 480px) and (min-width: 320px) {

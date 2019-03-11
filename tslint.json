@@ -4,6 +4,11 @@
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts"
-    ]
+    ],
+    "rules": {
+      // override tslint-react rules here
+      "jsx-wrap-multiline": false,
+      "jsx-no-lambda": false
+    }
   }
 }
