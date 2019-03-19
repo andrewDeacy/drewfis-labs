@@ -95,30 +95,29 @@ class App extends React.Component<AppProps, AppState> {
     private playButton: HTMLButtonElement;
 
     private bottomImagePaths: any[] =
-    [
-        { pic: bong00_00, price: 20 },
-        { pic: bong00_01, price: 25 },
-        { pic: bong00_02, price: 40 },
-        { pic: bong00_03, price: 55 },
-        { pic: bong00_04, price: 30 }
-    ];
+        [
+            {pic: bong00_00, price: 20},
+            {pic: bong00_01, price: 25},
+            {pic: bong00_02, price: 40},
+            {pic: bong00_03, price: 55},
+            {pic: bong00_04, price: 30}
+        ];
 
     private middleImagePaths: any[] =
-    [
-        { pic: bong01_00, price: 20 },
-        { pic: bong01_01, price: 40 },
-        { pic: bong01_02, price: 55 },
-        { pic: bong01_03, price: 55 },
-        { pic: bong01_04, price: 45 }
-    ];
+        [
+            {pic: bong01_00, price: 20},
+            {pic: bong01_01, price: 40},
+            {pic: bong01_02, price: 55},
+            {pic: bong01_03, price: 55},
+            {pic: bong01_04, price: 45}
+        ];
 
     private topImagePaths: any[] =
-    [
-        { pic: bong02_00, price: 25 },
-        { pic: bong02_02, price: 30 },
-        { pic: bong02_03, price: 25 },
-        { pic: bong02_04, price: 40 }
-    ];
+        [
+            {pic: bong02_02, price: 30, desc: ""},
+            {pic: bong02_03, price: 25, desc: ""},
+            {pic: bong02_04, price: 40, desc: ""}
+        ];
 
     componentDidMount() {
         this.setState({
@@ -184,7 +183,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     find4thIndex(currentSelected: number, isNext: boolean): number {
-        let numberOfMids = this.state.fourthLookUp.length -1;
+        let numberOfMids = this.state.fourthLookUp.length - 1;
         if (isNext) {
             if (numberOfMids == currentSelected) {
                 return 0;
@@ -211,7 +210,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     find5thIndex(currentSelected: number, isNext: boolean): number {
-        let numberOfMids = this.state.fifthLookUp.length -1;
+        let numberOfMids = this.state.fifthLookUp.length - 1;
         if (isNext) {
             if (numberOfMids == currentSelected) {
                 return 0;
@@ -228,7 +227,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     findMidIndex(currentSelected: number, isNext: boolean): number {
-        let numberOfMids = this.state.middleLookUp.length -1;
+        let numberOfMids = this.state.middleLookUp.length - 1;
         if (isNext) {
             if (numberOfMids == currentSelected) {
                 return 0;
@@ -245,7 +244,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     findTopIndex(currentSelected: number, isNext: boolean): number {
-        let numberOfTops = this.state.topLookUp.length -1;
+        let numberOfTops = this.state.topLookUp.length - 1;
         if (isNext) {
             if (numberOfTops == currentSelected) {
                 return 0;
@@ -262,7 +261,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     findBotIndex(currentSelected: number, isNext: boolean): number {
-        let numberOfBots = this.state.bottomLookUp.length -1;
+        let numberOfBots = this.state.bottomLookUp.length - 1;
         if (isNext) {
             if (numberOfBots == currentSelected) {
                 return 0;
@@ -278,13 +277,13 @@ class App extends React.Component<AppProps, AppState> {
         }
     }
 
-    calculateTotalCost(): number {
-        var totalCost = this.state.selectedMidPrice + this.state.selectedBotPrice + this.state.selectedTopPrice;
+    calculateTotalCost(): number { // ned to fix this...
+        var totalCost = this.bottomImagePaths.find((x, i) => i == this.state.selectedBot).price + this.middleImagePaths.find((x, i) => i == this.state.selectedMid).price + this.topImagePaths.find((x, i) => i == this.state.selectedTop).price;
 
-        if (this.state.hasFourth){
+        if (this.state.hasFourth) {
             totalCost += this.state.selected4thPrice;
         }
-        if (this.state.hasFifth){
+        if (this.state.hasFifth) {
             totalCost += this.state.selected5thPrice
         }
 
@@ -299,11 +298,11 @@ class App extends React.Component<AppProps, AppState> {
 
         var totalCost = this.state.selectedTopPrice + this.state.selectedMidPrice + this.state.selectedBotPrice;
 
-        if(this.state.hasFourth){
+        if (this.state.hasFourth) {
             cost.push("1st upgrade piece cost: $" + this.state.selected4thPrice.toString() + ".");
             totalCost += this.state.selected4thPrice;
         }
-        if (this.state.hasFifth){
+        if (this.state.hasFifth) {
             cost.push("2nd upgrade piece cost: $" + this.state.selected5thPrice.toString() + ".");
             totalCost += this.state.selected5thPrice;
         }
@@ -318,29 +317,33 @@ class App extends React.Component<AppProps, AppState> {
     // todo: need to add bowl to bong creation / selection page
 
 
-    purchaseBong(){
+    purchaseBong() {
         // todo: make API call to backend & send $$ CUSTOMER $$ to purchase page....
 
 
     }
 
-    upgradeBongClick(){
-        if(!this.state.hasFourth) {
+    upgradeBongClick() {
+        if (!this.state.hasFourth) {
             this.setState({
                 hasFourth: true,
-                selected4thPrice: this.middleImagePaths[this.state.selected4th].price,
-                totalCost: this.calculateTotalCost()
+                selected4thPrice: this.middleImagePaths[this.state.selected4th].price
+            }, () => {
+                this.setState({
+                    totalCost: this.calculateTotalCost()
+                });
             })
-
-        } else if(!this.state.hasFifth){
+        } else if (!this.state.hasFifth) {
             this.setState({
                 hasFifth: true,
                 selected5thPrice: this.middleImagePaths[this.state.selected5th].price,
                 totalCost: this.calculateTotalCost()
+            }, () => {
+                this.setState({
+                    totalCost: this.calculateTotalCost()
+                });
             });
         }
-
-
     }
 
     downgradeBongClick(){
@@ -359,124 +362,164 @@ class App extends React.Component<AppProps, AppState> {
     }
 
 
+
   public render() {
       /* tslint:disable */
     return (
         <div>
-            <Navbar>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="#home">
-                            <img src={headerLogo} className="app-header-logo" alt="logo" height={29}/>
-                        </a>
-                    </Navbar.Brand>
-                </Navbar.Header>
-                <Nav>
-                    <NavItem eventKey={1} href="#" className={"menu-item"}>
-                        Products
-                    </NavItem>
-                    <NavItem eventKey={1} href="#" className={"menu-item"}>
-                        About
-                    </NavItem>
-                    <NavItem eventKey={1} href="#" className={"menu-item"}>
-                        Share
-                    </NavItem>
-                    <div className={"build-button"}>
-                    <NavItem eventKey={2} href="#" >
-                        <Button bsStyle="warning" color={"white"}> Share your creation</Button>
-                    </NavItem>
-                    </div>
-                </Nav>
-            </Navbar>
+            <div className={"container fluid"}>
+                <div className={this.state.hasFourth ? "container fluid" : "container"}>
+                        <Navbar className={"navbar-static-top"}>
+                            <Navbar.Header>
+                                <Navbar.Brand>
+                                    <a href="#home">
+                                        <img src={headerLogo} className="app-header-logo" alt="logo" height={29}/>
+                                    </a>
+                                </Navbar.Brand>
+                            </Navbar.Header>
+                            <Nav className={"navbar-collapse collapse"}>
+                                <NavItem eventKey={1} href="#" className={"menu-item"}>
+                                    Products
+                                </NavItem>
+                                <NavItem eventKey={1} href="#" className={"menu-item"}>
+                                    About
+                                </NavItem>
+                                <NavItem eventKey={1} href="#" className={"menu-item"}>
+                                    Share
+                                </NavItem>
+                            </Nav>
+                        </Navbar>
 
-            <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 scroll-drew">
-                <div className="drewfis-container">
-                    <div className={"bong-image-holder"}>
-                        <img src={this.topImagePaths[this.state.selectedTop].pic} className={"bong-image"}/>
-
-                    <i aria-hidden="true" onClick={() => this.changeTop(true)} className={"nextCircle top15"}>
-                        <FontAwesomeIcon icon="arrow-right" className={"next"}/>
-                    </i>
-
-                    <i aria-hidden="true" onClick={() => this.changeTop(false)} className={"prevCircle top15"}>
-                        <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
-                    </i>
-                    </div>
-                </div>
-
-                <div className="drewfis-container">
-                    <div className={"bong-image-holder"}>
-                        <img src={this.middleImagePaths[this.state.selectedMid].pic} className={"bong-image"}/>
-
-                        <i aria-hidden="true" onClick={() => this.changeMid(true)} className={this.state.hasFourth ? "nextCircle has4th" : "nextCircle top39"}>
-                            <FontAwesomeIcon icon="arrow-right" className={"next"}/>
-                        </i>
-
-                        <i aria-hidden="true" onClick={() => this.changeMid(false)} className={this.state.hasFourth ? "prevCircle has4th" : "prevCircle top39"}>
-                            <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
-                        </i>
-                    </div>
-                </div>
-
-                {this.state.hasFourth &&
-                    <div className="drewfis-container">
-                        <div className={"bong-image-holder"}>
-                            <img src={this.middleImagePaths[this.state.selected4th].pic} className={"bong-image"}/>
-
-                            <i aria-hidden="true" onClick={() => this.change4th(true)} className={"nextCircle top50"}>
-                                <FontAwesomeIcon icon="arrow-right" className={"next"}/>
-                            </i>
-
-                            <i aria-hidden="true" onClick={() => this.change4th(false)} className={"prevCircle top50"}>
+            <div className={"fifth container"}>
+                {/* <--------- Top row ---------> */}
+                <div className="row">
+                        <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                            <i aria-hidden="true" onClick={() => this.changeTop(false)} className={"prevCircle"}>
                                 <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
                             </i>
                         </div>
-                    </div>
-                }
 
-                {this.state.hasFifth &&
-                    <div className="drewfis-container">
-                        <div className={"bong-image-holder"}>
-                            <img src={this.middleImagePaths[this.state.selected5th].pic} className={"bong-image"}/>
+                        <div className={"col-md-4 col-sm-6 col-xs-10 middle-bong"}>
+                            <img src={this.topImagePaths[this.state.selectedTop].pic} className={this.state.hasFourth ? "img-responsive sev-bong" : "img-responsive"}/>
+                        </div>
 
-                            <i aria-hidden="true" onClick={() => this.change5th(true)} className={"nextCircle top30"}>
+                        <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                            <i aria-hidden="true" onClick={() => this.changeTop(true)} className={"nextCircle"}>
                                 <FontAwesomeIcon icon="arrow-right" className={"next"}/>
-                            </i>
-
-                            <i aria-hidden="true" onClick={() => this.change5th(false)} className={"prevCircle top30"}>
-                                <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
                             </i>
                         </div>
                     </div>
-                }
 
-                <div
-                    className={"drewfis-container"}>
-                    <div className={"bong-image-holder"}>
-                        <img src={this.bottomImagePaths[this.state.selectedBot].pic} className={"bong-image"}/>
+                {/* <--------- Middle row ---------> */}
+                <div className="row">
+                    <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                        <i aria-hidden="true" onClick={() => this.changeMid(false)} className={"prevCircle"}>
+                            <FontAwesomeIcon icon="arrow-left" className={"previous"}/></i>
+                    </div>
 
-                        <i aria-hidden="true" onClick={() => this.changeBot(true)} className={"nextCircle top615"}>
+                    <div className="col-md-4 col-sm-6 col-xs-10 middle-bong">
+                        <img src={this.middleImagePaths[this.state.selectedMid].pic}  className={this.state.hasFourth ? "img-responsive sev-bong" : "img-responsive"}/>
+                    </div>
+
+                    <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                        <i aria-hidden="true" onClick={() => this.changeMid(true)} className={"nextCircle"}>
                             <FontAwesomeIcon icon="arrow-right" className={"next"}/>
-                        </i>
-
-                        <i aria-hidden="true" onClick={() => this.changeBot(false)} className={"prevCircle top615"}>
-                            <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
                         </i>
                     </div>
                 </div>
 
-                <Button bsStyle="primary" className={"btn-block"} style={{marginTop: "10px", marginBottom: "10px"}} onClick={() => this.upgradeBongClick()}>Upgrade</Button>
-                <Button bsStyle="success" className={"btn-block"} style={{marginTop: "10px", marginBottom: "10px"}} onClick={() => null}>Purchase</Button>
+                {/* <--------- 1st Upgrade row ---------> */}
+                    <div className={this.state.hasFourth ?  "row" : "row hidden"}>
+                        <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                            <i aria-hidden="true" onClick={() => this.changeMid(false)} className={"prevCircle"}>
+                                <FontAwesomeIcon icon="arrow-left" className={"previous"}/></i>
+                        </div>
 
-                {(this.state.hasFourth || this.state.hasFifth) &&
-                    <Button bsStyle="danger" className={"btn-block"} style={{marginTop: "10px", marginBottom: "10px"}}
-                            onClick={() => this.downgradeBongClick()}>Downgrade</Button>
-                }
+                        <div className="col-md-4 col-sm-6 col-xs-10 middle-bong">
+                            <img src={this.middleImagePaths[this.state.selectedMid].pic} className={this.state.hasFourth ? "img-responsive sev-bong" : "img-responsive"}/>
+                        </div>
 
-                <p className={"costText"}> Total cost as built: ${this.state.totalCost} <FontAwesomeIcon icon="info-circle" className={"hvr-grow"}/> </p>
-                <p>{this.state.costDesc}</p>
+                        <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                            <i aria-hidden="true" onClick={() => this.changeMid(true)} className={"nextCircle"}>
+                                <FontAwesomeIcon icon="arrow-right" className={"next"}/>
+                            </i>
+                        </div>
+                    </div>
 
+                {/* <--------- 2nd Upgrade row ---------> */}
+                    <div className={this.state.hasFifth ?  "row" : "row hidden"}>
+                        <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                            <i aria-hidden="true" onClick={() => this.changeMid(false)} className={"prevCircle"}>
+                                <FontAwesomeIcon icon="arrow-left" className={"previous"}/></i>
+                        </div>
+
+                        <div className="col-md-4 col-sm-6 col-xs-10 middle-bong">
+                            <img src={this.middleImagePaths[this.state.selectedMid].pic} className={this.state.hasFourth ? "img-responsive sev-bong" : "img-responsive"}/>
+                        </div>
+
+                        <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                            <i aria-hidden="true" onClick={() => this.changeMid(true)} className={"nextCircle"}>
+                                <FontAwesomeIcon icon="arrow-right" className={"next"}/>
+                            </i>
+                        </div>
+                    </div>
+                <div className={this.state.hasFifth ?  "row" : "row hidden"}>
+                    <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                        <i aria-hidden="true" onClick={() => this.changeMid(false)} className={"prevCircle"}>
+                            <FontAwesomeIcon icon="arrow-left" className={"previous"}/></i>
+                    </div>
+
+                    <div className="col-md-4 col-sm-6 col-xs-10 middle-bong">
+                        <img src={this.middleImagePaths[this.state.selectedMid].pic} className={this.state.hasFourth ? "img-responsive sev-bong" : "img-responsive"}/>
+                    </div>
+
+                    <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                        <i aria-hidden="true" onClick={() => this.changeMid(true)} className={"nextCircle"}>
+                            <FontAwesomeIcon icon="arrow-right" className={"next"}/>
+                        </i>
+                    </div>
+                </div>
+
+                {/* <--------- Bottom row ---------> */}
+                <div className="row">
+
+                    <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                        <i aria-hidden="true" onClick={() => this.changeBot(false)} className={"prevCircle "}>
+                            <FontAwesomeIcon icon="arrow-left" className={"previous"}/>
+                        </i>
+                    </div>
+
+                    <div className="col-md-4 col-sm-6 col-xs-10 middle-bong">
+                        <img src={this.bottomImagePaths[this.state.selectedBot].pic} className={this.state.hasFourth || this.state.hasFifth ? (this.state.hasFifth ? "img-responsive sev-bong fifth-bot" : "img-responsive sev-bong") : "img-responsive"}/>
+                    </div>
+
+                    <div className="col-md-4 col-sm-3 col-xs-1 middle-arrow">
+                        <i aria-hidden="true" onClick={() => this.changeBot(true)} className={"nextCircle"}>
+                            <FontAwesomeIcon icon="arrow-right" className={"next"}/>
+                        </i>
+                    </div>
+                </div>
             </div>
+            </div>
+            <div className={"navbar navbar-default navbar-fixed-bottom button-buy container"}>
+                <div className={"row col-md-12"}>
+                    <Button bsStyle="primary" className={"btn-block"} style={{marginTop: "10px", marginBottom: "10px"}} onClick={() => this.upgradeBongClick()}>Upgrade</Button>
+                </div>
+
+                <div className={"row col-md-12"}>
+                    <Button bsStyle="success" className={"btn-block"} style={{marginTop: "10px", marginBottom: "10px"}} onClick={() => null}>Purchase</Button>
+                </div>
+
+                <div className={this.state.hasFourth || this.state.hasFifth ? "row col-md-12" : "row hidden col-md-12"}>
+                    <Button bsStyle="danger" className={"btn-block"} style={{marginTop: "10px", marginBottom: "10px"}} onClick={() => this.downgradeBongClick()}>Downgrade</Button>
+                </div>
+
+                <div className={"row col-md-12 pricing-bot"}>
+                    <p className={" costText pricing-bot"}> Total cost as built: ${this.state.totalCost} <i title={this.state.costDesc}><FontAwesomeIcon icon="info-circle" className={"hvr-grow"} /></i> </p>
+                </div>
+            </div>
+
+        </div>
         </div>
 
     );

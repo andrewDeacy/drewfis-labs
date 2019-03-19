@@ -8,15 +8,10 @@ body {
   display: none;
 }
 
-.previous {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  color: white;
-  z-index: 20;
-}
 
-
+/*
+body, html { height: 100vh; width: 100vw; overflow: hidden; }
+*/
 
 /* Grow */
 .hvr-grow {
@@ -37,9 +32,9 @@ body {
 }
 
 .prevCircle {
-  position: absolute;
+  display: block;
+  margin-left: auto;
   transform: translateY(-50%);
-  right: 85%;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -48,8 +43,25 @@ body {
   z-index: 19;
 }
 
-.costText{
-  font-size: x-large;
+.nextCircle {
+  display: block;
+  margin-right: auto;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  opacity: 0.5;
+  background-color: black;
+  z-index: 19;
+}
+
+
+.previous {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: white;
+  z-index: 20;
 }
 
 .next {
@@ -60,16 +72,9 @@ body {
   z-index: 20;
 }
 
-.nextCircle {
-  position: absolute;
-  transform: translateY(-50%);
-  left: 85%;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  opacity: 0.5;
-  background-color: black;
-  z-index: 19;
+
+.costText{
+  font-size: x-large;
 }
 
 .drewfis-container {
@@ -121,19 +126,22 @@ body {
   padding-bottom: 2px;
 }
 
-
-.bong-image{
-  height: 70%;
-  width: 70%;
-  display:inline;
-  left: 50%;
-  position: relative;
-  transform: translate(50%);
+.button-buy{
+  display: inline;
 }
 
-.bong-image-holder{
-  display: block;
-  width: 35%;
+.sev-bong{
+  max-width:75% !important;
+ }
+
+.fifth{
+  overflow:auto;
+  display: inline;
+  margin-bottom: 20%;
+}
+
+.fifth-bot{
+  margin-bottom: 56%;
 }
 
 .fa-arrow-right{
@@ -144,33 +152,48 @@ body {
   top: 50%;
 }
 
-.top15{
-  top: 15%;
+.pricing-bot{
+  text-align: center;
+  vertical-align: middle;
+  align-items: center;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.top30{
-  top: 44%;
+ .center-block {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+ }
+
+ .middle-bong{
+   margin-top: auto;
+   margin-bottom: auto;
+   padding-left: 0;
+   padding-right: 0;
+ }
+
+.middle-arrow{
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.top45{
-  top: 69%;
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+.row > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.top50{
-  top: 50%;
-}
-
-.has4th{
-  top: 34%;
-}
-
-.top39{
-  top: 39%;
-}
-
-.top615{
-  top: 61.5%;
-}
 
 @media screen and (max-width: 480px) and (min-width: 320px) {
   /* For mobile phones: */
